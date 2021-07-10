@@ -1,13 +1,38 @@
+const azure = require('azure-storage');
+
 module.exports = async function (context, req) {
-    context.log('JavaScript HTTP trigger function processed a request.');
+    // context.log(`COnnection string: ${process.env.TableStorage}`);
 
-    const name = (req.query.name || (req.body && req.body.name));
-    const responseMessage = name
-        ? "Hello, " + name + ". This HTTP triggered function executed successfully."
-        : "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.";
+    const tableService = azure.createTableService(process.env.TableStorage);
+    const tableName = "Events";
 
+
+    const events = await executeQuery();
     context.res = {
-        // status: 200, /* Defaults to 200 */
-        body: responseMessage
-    };
+        status: 200,
+        body: events
+    }
+
+    context.log("Done")
+}
+async function executeQuery() {
+    try {
+        const tableService = azure.createTableService(process.env.TableStorage);
+        return new Promise((resolve, reject) => {
+            var query = new azure.TableQuery().top(100);
+            tableService.queryEntities("Events", query, null, function (error, result, response) {
+                //console.log(response)
+                if (!error) {
+                    resolve(result.entries);
+                } else {
+                    resolve(error);
+                }
+            });
+        });
+    } catch (e) {
+        console.log(2, e)
+        return new Promise((resolve, reject) => {
+            reject(e);
+        });
+    }
 }
