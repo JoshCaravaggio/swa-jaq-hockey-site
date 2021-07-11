@@ -1,9 +1,9 @@
 const LOCAL_BASE_URL = 'http://localhost:7071';
-const AZURE_BASE_URL = 'https://orange-beach-0331eec10.azurestaticapps.net/api/Getevents';
+const AZURE_BASE_URL = 'https://orange-beach-0331eec10.azurestaticapps.net/api/';
 
 $(document).ready(function () {
     $.ajax({
-        url: "http://127.0.0.1:7071/api/GetEvents",
+        url: `${getAPIBaseUrl}/GetEvents`,
         error: function (err) {
             var errorHTML = `<div class="event-container">
             <br>
