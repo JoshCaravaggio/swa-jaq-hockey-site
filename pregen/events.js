@@ -5,7 +5,14 @@ $(document).ready(function () {
     $.ajax({
         url: "http://127.0.0.1:7071/api/GetEvents",
         error: function (err) {
-            document.getElementById("SessionsContainer").innerHTML += renderSession(element);
+            var errorHTML = `<div class="event-container">
+            <br>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 session-datetime">Error occured while retrieving events</div> 
+                </div>   
+            <br>
+            </div>`
+            document.getElementById("SessionsContainer").innerHTML += renderSession();
         }
     }).then(function (data) {
         console.log(data)
