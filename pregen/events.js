@@ -10,7 +10,7 @@ const errorHTML = `<div class="event-container">
 
 $(document).ready(function () {
     $.ajax({
-        url: `${getAPIBaseUrl}/GetEvents`,
+        url: `${getAPIBaseUrl()}/GetEvents`,
         error: function (err) {
             document.getElementById("SessionsContainer").innerHTML += errorHTML;
         }
@@ -29,7 +29,7 @@ $(document).ready(function () {
 
 const getAPIBaseUrl = () => {
     console.log(window.location.href);
-    const isLocal = /josh/.test(window.location.href);
+    const isLocal = /josh/.test(window.location.href) || /localhost/.test(window.location.href);
     return isLocal ? LOCAL_BASE_URL : AZURE_BASE_URL;
 }
 
