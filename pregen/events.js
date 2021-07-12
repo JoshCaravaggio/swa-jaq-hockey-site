@@ -1,24 +1,24 @@
-const LOCAL_BASE_URL = 'http://localhost:7071';
-const AZURE_BASE_URL = 'https://orange-beach-0331eec10.azurestaticapps.net/api/';
+const LOCAL_BASE_URL = 'http://localhost:7071/api';
+const AZURE_BASE_URL = 'https://orange-beach-0331eec10.azurestaticapps.net/api';
+const errorHTML = `<div class="event-container">
+<br>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 session-datetime">Error occured while retrieving events</div> 
+    </div>   
+<br>
+</div>`
 
 $(document).ready(function () {
     $.ajax({
         url: `${getAPIBaseUrl}/GetEvents`,
         error: function (err) {
-            var errorHTML = `<div class="event-container">
-            <br>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 session-datetime">Error occured while retrieving events</div> 
-                </div>   
-            <br>
-            </div>`
-            document.getElementById("SessionsContainer").innerHTML += renderSession();
+            document.getElementById("SessionsContainer").innerHTML += errorHTML;
         }
     }).then(function (data) {
         console.log(data)
 
         if (data.length === 0) {
-            document.getElementById("SessionsContainer").innerHTML += renderSession(element);
+            document.getElementById("SessionsContainer").innerHTML += renderSession(errorHTML);
         }
         JSON.parse(data).forEach(element => {
             document.getElementById("SessionsContainer").innerHTML += renderSession(element);
@@ -28,7 +28,8 @@ $(document).ready(function () {
 
 
 const getAPIBaseUrl = () => {
-    const isLocal = /localhost/.test(window.location.href);
+    console.log(window.location.href);
+    const isLocal = /josh/.test(window.location.href);
     return isLocal ? LOCAL_BASE_URL : AZURE_BASE_URL;
 }
 
