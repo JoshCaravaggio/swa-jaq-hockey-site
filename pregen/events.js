@@ -8,21 +8,34 @@ const errorHTML = `<div class="event-container">
 <br>
 </div>`
 
+const noEventsHTML = `<div class="event-container">
+<br>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 session-datetime" style="text-align:center">No events posted. Please check back later</div> 
+    </div>   
+<br>
+</div>`
+
+
 $(document).ready(function () {
+
+    const isOnIce = /onice/.test(window.location.href);
+    const eventType = isOnIce ? 'onice' : 'office'
+
     $.ajax({
-        url: `${getAPIBaseUrl()}/GetEvents`,
+        url: `${getAPIBaseUrl()}/GetEvents?type=${eventType}`,
         error: function (err) {
             document.getElementById("SessionsContainer").innerHTML += errorHTML;
         }
     }).then(function (data) {
-        console.log(data)
-
-        if (data.length === 0) {
-            document.getElementById("SessionsContainer").innerHTML += renderSession(errorHTML);
+        if (JSON.parse(data).length === 0) {
+            document.getElementById("SessionsContainer").innerHTML += noEventsHTML;
         }
-        JSON.parse(data).forEach(element => {
-            document.getElementById("SessionsContainer").innerHTML += renderSession(element);
-        });
+        else {
+            JSON.parse(data).forEach(element => {
+                document.getElementById("SessionsContainer").innerHTML += renderSession(element, eventType);
+            });
+        }
     });
 });
 
@@ -33,7 +46,9 @@ const getAPIBaseUrl = () => {
     return isLocal ? LOCAL_BASE_URL : AZURE_BASE_URL;
 }
 
-const renderSession = (event) => {
+const renderSession = (event, type) => {
+
+    const prettyType = type === 'onice' ? "On-ice" : "Off-ice";
 
     var sessionHTML = `<div class="event-container">
     <br>

@@ -6,7 +6,7 @@ module.exports = async function (context, req) {
     const tableName = "Events";
 
     try {
-        const events = await executeQuery();
+        const events = await executeQuery(req.query.type);
         context.res = {
             status: 200,
             body: events
@@ -21,11 +21,11 @@ module.exports = async function (context, req) {
     }
 }
 
-async function executeQuery() {
+async function executeQuery(type) {
     try {
         const tableService = azure.createTableService(process.env.TableStorage);
         return new Promise((resolve, reject) => {
-            var query = new azure.TableQuery().top(100);
+            var query = new azure.TableQuery().top(100).where(`Type == ?`, type);
             tableService.queryEntities("Events", query, null, function (error, result, response) {
                 console.log(response)
                 if (!error) {
