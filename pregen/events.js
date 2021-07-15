@@ -18,7 +18,6 @@ const noEventsHTML = `<div class="event-container">
 
 
 $(document).ready(function () {
-
     const isOnIce = /onice/.test(window.location.href);
     const eventType = isOnIce ? 'onice' : 'office'
 
@@ -67,7 +66,7 @@ const renderSession = (event, type) => {
     <br>
     <div class="row">
     <div class="col-12" style="text-align:center">
-        <a href="mailto:jaqhockey@gmail.com?subject=RSVP for On-Ice Session: ${event.dateTimeDescription}}">
+        <a href="mailto:jaqhockey@gmail.com?subject=RSVP for ${prettyType} Session: ${event.dateTimeDescription}}">
         <div class="session-rsvp" style="padding-left:30px;padding-right:30px;">RSVP</div>
         </a>
     </div>
