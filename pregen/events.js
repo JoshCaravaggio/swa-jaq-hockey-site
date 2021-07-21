@@ -35,6 +35,7 @@ $(document).ready(function () {
                 document.getElementById("SessionsContainer").innerHTML += renderSession(element, eventType);
             });
         }
+        $("#loadingSpinner").hide();
     });
 });
 
