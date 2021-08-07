@@ -23,7 +23,9 @@ module.exports = async function (context, req) {
             status: 500,
             body: "An error occured while getting the events.",
             headers: {
-                "Access-Control-Allow-Origin": "*"
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
+                "Access-Control-Allow-Methods": "GET"
             }
         }
     }

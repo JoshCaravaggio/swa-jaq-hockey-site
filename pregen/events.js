@@ -1,5 +1,5 @@
 const LOCAL_BASE_URL = 'http://localhost:7071/api';
-const AZURE_BASE_URL = 'https://orange-beach-0331eec10.azurestaticapps.net/api';
+const AZURE_BASE_URL = 'https://jaqhockey.ca/api';
 const errorHTML = `<div class="event-container">
 <br>
     <div class="row">
