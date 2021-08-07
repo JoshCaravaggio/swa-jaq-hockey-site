@@ -25,6 +25,7 @@ $(document).ready(function () {
         url: `${getAPIBaseUrl()}/GetEvents?type=${eventType}`,
         error: function (err) {
             document.getElementById("SessionsContainer").innerHTML += errorHTML;
+            $("#loadingSpinner").hide();
         }
     }).then(function (data) {
         if (JSON.parse(data).length === 0) {

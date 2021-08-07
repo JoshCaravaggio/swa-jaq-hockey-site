@@ -9,14 +9,20 @@ module.exports = async function (context, req) {
         const events = await executeQuery(req.query.type);
         context.res = {
             status: 200,
-            body: events
+            body: events,
+            headers: {
+                "Access-Control-Allow-Origin": "*"
+            }
         }
     }
     catch (err) {
         context.log(err);
         context.res = {
             status: 500,
-            body: "An error occured while getting the events."
+            body: "An error occured while getting the events.",
+            headers: {
+                "Access-Control-Allow-Origin": "*"
+            }
         }
     }
 }
